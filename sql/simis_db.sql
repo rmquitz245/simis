@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 21, 2026 at 07:24 PM
+-- Generation Time: May 23, 2026 at 04:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -73,6 +73,25 @@ CREATE TABLE `barangay` (
 INSERT INTO `barangay` (`barangay_id`, `municipality_id_barangay_fk`, `barangay_name`) VALUES
 (1, 78, 'Amtic'),
 (2, 78, 'Baligang');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `branch`
+--
+
+CREATE TABLE `branch` (
+  `branch_id` int(11) NOT NULL,
+  `branch_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `branch`
+--
+
+INSERT INTO `branch` (`branch_id`, `branch_name`) VALUES
+(1, 'National'),
+(2, 'Local');
 
 -- --------------------------------------------------------
 
@@ -170,38 +189,27 @@ INSERT INTO `country` (`country_id`, `country_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `department`
---
-
-CREATE TABLE `department` (
-  `department_id` int(11) NOT NULL,
-  `department_name` varchar(100) NOT NULL,
-  `office_id_department_fk` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `division`
---
-
-CREATE TABLE `division` (
-  `division_id` int(11) NOT NULL,
-  `division_code` varchar(50) NOT NULL,
-  `division_name` int(11) NOT NULL,
-  `region_id_division_fk` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `employment_status`
 --
 
 CREATE TABLE `employment_status` (
   `employment_status_id` int(11) NOT NULL,
-  `employment_status_name` varchar(50) NOT NULL
+  `employment_status_name` varchar(50) NOT NULL,
+  `is_eligible_for_step` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employment_status`
+--
+
+INSERT INTO `employment_status` (`employment_status_id`, `employment_status_name`, `is_eligible_for_step`) VALUES
+(1, 'Permanent', 1),
+(2, 'Temporary', 0),
+(3, 'Coterminous', 1),
+(4, 'Contractual', 0),
+(5, 'Casual', 1),
+(6, 'Substitute', 0),
+(7, 'Fixed Term', 0);
 
 -- --------------------------------------------------------
 
@@ -1993,6 +2001,20 @@ CREATE TABLE `nature_of_appointment` (
   `nature_of_appointment_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `nature_of_appointment`
+--
+
+INSERT INTO `nature_of_appointment` (`nature_of_appointment_id`, `nature_of_appointment_name`) VALUES
+(1, 'Original'),
+(2, 'Promotion'),
+(3, 'Transfer'),
+(4, 'Reemployment'),
+(5, 'Reappointment'),
+(6, 'Reclassification'),
+(7, 'Reinstatement'),
+(8, 'Demotion');
+
 -- --------------------------------------------------------
 
 --
@@ -2069,7 +2091,8 @@ INSERT INTO `personnel` (`personnel_id`, `personnel_last_name`, `personnel_first
 (2, 'Greogorio', 'Angelica', 'Marchan', '777777', '1994-09-14', 1, 2, 78, 2, 'Purok 3', 'Riverside', 143, 2, 'Purok 3', 'Riverside', '143', '11212', '232434', '555555', '66666', '777777', '2026-05-21 05:50:37', '2026-05-21 05:50:37'),
 (3, 'Quitasol', 'Emmanual', 'Sayson', '657778', '1994-01-12', 2, 1, 1197, 1, 'purok 6', 'Riverside', 245, 1, 'purok 6', 'Riverside', '245', '1111', '22222', '33333', '44444', '55555', '2026-05-21 05:54:37', '2026-05-21 05:54:37'),
 (4, 'Padilla', 'Robin', 'Reyes', '76545346', '1972-02-08', 2, 2, 78, 1, 'Bato Street', 'SC', 12, 1, 'Bata Street', 'SC', '12', '3344', '45456', '5344234', '98865765', '345665', '2026-05-21 07:19:59', '2026-05-21 07:19:59'),
-(5, 'Dela Rosa', 'Bato', 'Duterte', '6543222', '1970-11-01', 2, 1, 554, 1, 'Pedro Street', 'ICC', 911, 1, 'Pedro Street', 'ICC', '911', '654543534', '5643536', '5643435356', '34542', '65436', '2026-05-21 07:43:03', '2026-05-21 07:43:03');
+(5, 'Dela Rosa', 'Bato', 'Duterte', '6543222', '1970-11-01', 2, 1, 554, 1, 'Pedro Street', 'ICC', 911, 1, 'Pedro Street', 'ICC', '911', '654543534', '5643536', '5643435356', '34542', '65436', '2026-05-21 07:43:03', '2026-05-21 07:43:03'),
+(6, 'Cayetano', 'Peter', 'Padilla', '65454654', '1985-06-10', 2, 1, 94, 2, 'Amorsolo Street', 'SC', 777, 2, 'Amorsolo Street', 'SC', '777', '98745', '687746345', '97865765', '5746352365', '897088676465345', '2026-05-21 09:38:30', '2026-05-21 09:38:30');
 
 -- --------------------------------------------------------
 
@@ -2146,6 +2169,17 @@ CREATE TABLE `position` (
   `salary_grade_id_job_position_fk` int(11) NOT NULL,
   `type_of_personnel_id_job_position_fk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `position`
+--
+
+INSERT INTO `position` (`job_position_id`, `job_position_title`, `salary_grade_id_job_position_fk`, `type_of_personnel_id_job_position_fk`) VALUES
+(1, 'Teacher I', 11, 1),
+(2, 'Teacher II', 12, 1),
+(3, 'Teacher III', 13, 1),
+(4, 'Teacher IV', 14, 1),
+(5, 'Teacher V', 15, 1);
 
 -- --------------------------------------------------------
 
@@ -2307,17 +2341,25 @@ CREATE TABLE `record_of_appointment` (
   `personnel_id_record_of_appointment_fk` int(11) NOT NULL,
   `job_position_id_record_of_appointment_fk` int(11) NOT NULL,
   `employment_status_id_record_of_appointment_fk` int(11) NOT NULL,
-  `division_id_record_of_appointment_fk` int(11) NOT NULL,
   `station_id_record_of_appointment_fk` int(11) NOT NULL,
-  `department_id_record_of_appointment_fk` int(11) NOT NULL,
-  `unit_id_record_of_appointment_fk` int(11) NOT NULL,
-  `school_id_record_of_appointment_fk` int(11) NOT NULL,
   `nature_of_appointment_id_record_of_appointment_fk` int(11) NOT NULL,
+  `vice_predecessor_name` varchar(255) NOT NULL,
   `vice_type_id_record_of_appointment_fk` int(11) NOT NULL,
   `date_of_appointment` datetime NOT NULL,
   `plantilla_item_no` varchar(255) NOT NULL,
-  `appointment_status_id_record_of_appointment_fk` int(11) NOT NULL
+  `appointment_status_id_record_of_appointment_fk` int(11) NOT NULL,
+  `branch_id_record_of_appointment_fk` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `record_of_appointment`
+--
+
+INSERT INTO `record_of_appointment` (`record_of_appointment_id`, `personnel_id_record_of_appointment_fk`, `job_position_id_record_of_appointment_fk`, `employment_status_id_record_of_appointment_fk`, `station_id_record_of_appointment_fk`, `nature_of_appointment_id_record_of_appointment_fk`, `vice_predecessor_name`, `vice_type_id_record_of_appointment_fk`, `date_of_appointment`, `plantilla_item_no`, `appointment_status_id_record_of_appointment_fk`, `branch_id_record_of_appointment_fk`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 1, 3, 2, 'NEW ITEM CY 2020', 7, '2020-06-15 00:00:00', '67654324256', 1, 1, '2026-05-22 18:09:02', '2026-05-22 18:09:02'),
+(2, 2, 3, 1, 4, 6, 'NEW ITEM', 7, '2024-11-12 00:00:00', '4657458756', 1, 1, '2026-05-22 18:33:28', '2026-05-22 18:33:28');
 
 -- --------------------------------------------------------
 
@@ -2368,6 +2410,34 @@ CREATE TABLE `salary_grade` (
   `salary_grade_max_step` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `salary_grade`
+--
+
+INSERT INTO `salary_grade` (`salary_grade_id`, `salary_grade_level`, `salary_grade_max_step`) VALUES
+(1, 1, 8),
+(2, 2, 8),
+(3, 3, 8),
+(4, 4, 8),
+(5, 5, 8),
+(6, 6, 8),
+(7, 7, 8),
+(8, 8, 8),
+(9, 9, 8),
+(10, 10, 8),
+(11, 11, 8),
+(12, 12, 8),
+(13, 13, 8),
+(14, 14, 8),
+(15, 15, 8),
+(16, 16, 8),
+(17, 17, 8),
+(18, 18, 8),
+(19, 19, 8),
+(20, 20, 8),
+(21, 21, 8),
+(22, 22, 8);
+
 -- --------------------------------------------------------
 
 --
@@ -2379,20 +2449,6 @@ CREATE TABLE `salary_grade_step` (
   `salary_grade_id_salary_grade_step_fk` int(11) NOT NULL,
   `step_no` int(11) NOT NULL,
   `salary_amount` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `school`
---
-
-CREATE TABLE `school` (
-  `school_id` int(11) NOT NULL,
-  `school_id_no` varchar(50) NOT NULL,
-  `school_name` varchar(255) NOT NULL,
-  `division_id_school_fk` int(11) NOT NULL,
-  `barangay_id_school_fk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -2478,7 +2534,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('LCSSIKbADC7gaEtp3v1R1llYeov7FdfofIleNdCZ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiU3dOaTdmNWxtT0pONTFVZ0M0ZDdjYjI4RFZjdGVlN1NFWFlCUGhjVSI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6MzE6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9wZXJzb25uZWwiO3M6NToicm91dGUiO3M6MTU6InBlcnNvbm5lbC5pbmRleCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1779380836);
+('EZNvgKWJo2uMKLZ082QchDHkaUec1pHpRCZ1g3PJ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSFdXMlpCblRMd09rU3VOT0V0d2xPMnNVZVBIb0M4Sm9hdThSdmZPOCI7czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6NDU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9lbXBsb3ltZW50L2FwcG9pbnRtZW50cyI7czo1OiJyb3V0ZSI7Tjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1779503613);
 
 -- --------------------------------------------------------
 
@@ -2509,8 +2565,40 @@ CREATE TABLE `station` (
   `station_id` int(11) NOT NULL,
   `station_code` varchar(50) NOT NULL,
   `station_name` varchar(255) NOT NULL,
-  `division_id_station_fk` int(11) NOT NULL
+  `station_type_id_fk` int(11) NOT NULL,
+  `parent_station_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `station`
+--
+
+INSERT INTO `station` (`station_id`, `station_code`, `station_name`, `station_type_id_fk`, `parent_station_id`) VALUES
+(1, '05', 'Region V - Bicol Region', 1, NULL),
+(2, '265', 'Ligao City', 2, 1),
+(3, '091', 'Senior High School', 4, 2),
+(4, '506', 'Paulba NHS', 4, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `station_types`
+--
+
+CREATE TABLE `station_types` (
+  `station_type_id` int(11) NOT NULL,
+  `station_type_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `station_types`
+--
+
+INSERT INTO `station_types` (`station_type_id`, `station_type_name`) VALUES
+(1, 'Region'),
+(2, 'Division'),
+(3, 'District'),
+(4, 'School');
 
 -- --------------------------------------------------------
 
@@ -2579,17 +2667,14 @@ CREATE TABLE `type_of_personnel` (
   `type_of_personnel_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `unit`
+-- Dumping data for table `type_of_personnel`
 --
 
-CREATE TABLE `unit` (
-  `unit_id` int(11) NOT NULL,
-  `unit_name` varchar(100) NOT NULL,
-  `department_id_unit_fk` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+INSERT INTO `type_of_personnel` (`type_of_personnel_id`, `type_of_personnel_name`) VALUES
+(1, 'Teaching'),
+(2, 'Teaching-Related'),
+(3, 'Non-Teaching');
 
 -- --------------------------------------------------------
 
@@ -2616,8 +2701,22 @@ CREATE TABLE `users` (
 
 CREATE TABLE `vice_type` (
   `vice_type_id` int(11) NOT NULL,
-  `vice_type_name` varchar(50) NOT NULL
+  `vice_type_name` varchar(50) NOT NULL,
+  `vice_type_print_value` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vice_type`
+--
+
+INSERT INTO `vice_type` (`vice_type_id`, `vice_type_name`, `vice_type_print_value`) VALUES
+(1, 'Promoted', 'Promoted'),
+(2, 'Retired', 'Retired'),
+(3, 'Transferred', 'Transferred'),
+(4, 'Resigned', 'Resigned'),
+(5, 'Deceased', 'Deceased'),
+(6, 'Dismissed', 'Dismissed'),
+(7, 'Newly Created Item / NA', '-');
 
 --
 -- Indexes for dumped tables
@@ -2641,6 +2740,12 @@ ALTER TABLE `appointment_status`
 ALTER TABLE `barangay`
   ADD PRIMARY KEY (`barangay_id`),
   ADD KEY `municipality_id_barangay_fk` (`municipality_id_barangay_fk`);
+
+--
+-- Indexes for table `branch`
+--
+ALTER TABLE `branch`
+  ADD PRIMARY KEY (`branch_id`);
 
 --
 -- Indexes for table `cache`
@@ -2685,19 +2790,6 @@ ALTER TABLE `civil_status`
 --
 ALTER TABLE `country`
   ADD PRIMARY KEY (`country_id`);
-
---
--- Indexes for table `department`
---
-ALTER TABLE `department`
-  ADD PRIMARY KEY (`department_id`);
-
---
--- Indexes for table `division`
---
-ALTER TABLE `division`
-  ADD PRIMARY KEY (`division_id`),
-  ADD KEY `region_id_division_fk` (`region_id_division_fk`);
 
 --
 -- Indexes for table `employment_status`
@@ -2857,16 +2949,13 @@ ALTER TABLE `reason_for_change_correction_of_name`
 ALTER TABLE `record_of_appointment`
   ADD PRIMARY KEY (`record_of_appointment_id`),
   ADD KEY `appointment_status_id_record_of_appointment_fk` (`appointment_status_id_record_of_appointment_fk`),
-  ADD KEY `department_id_record_of_appointment_fk` (`department_id_record_of_appointment_fk`),
-  ADD KEY `division_id_record_of_appointment_fk` (`division_id_record_of_appointment_fk`),
   ADD KEY `employment_status_id_record_of_appointment_fk` (`employment_status_id_record_of_appointment_fk`),
   ADD KEY `job_position_id_record_of_appointment_fk` (`job_position_id_record_of_appointment_fk`),
   ADD KEY `nature_of_appointment_id_record_of_appointment_fk` (`nature_of_appointment_id_record_of_appointment_fk`),
   ADD KEY `personnel_idrecord_of_appointment_fk` (`personnel_id_record_of_appointment_fk`),
-  ADD KEY `school_id_record_of_appointment_fk` (`school_id_record_of_appointment_fk`),
   ADD KEY `station_id_record_of_appointment_fk` (`station_id_record_of_appointment_fk`),
-  ADD KEY `unit_id_record_of_appointment_fk` (`unit_id_record_of_appointment_fk`),
-  ADD KEY `vice_type_id_record_of_appointment_fk` (`vice_type_id_record_of_appointment_fk`);
+  ADD KEY `vice_type_id_record_of_appointment_fk` (`vice_type_id_record_of_appointment_fk`),
+  ADD KEY `branch_id_record_of_appointment_fk` (`branch_id_record_of_appointment_fk`);
 
 --
 -- Indexes for table `region`
@@ -2887,14 +2976,6 @@ ALTER TABLE `salary_grade`
 ALTER TABLE `salary_grade_step`
   ADD PRIMARY KEY (`salary_grade_step_id`),
   ADD KEY `salary_grade_id_salary_grade_step_fk` (`salary_grade_id_salary_grade_step_fk`);
-
---
--- Indexes for table `school`
---
-ALTER TABLE `school`
-  ADD PRIMARY KEY (`school_id`),
-  ADD KEY `barangay_id_school_fk` (`barangay_id_school_fk`),
-  ADD KEY `division_id_school_fk` (`division_id_school_fk`);
 
 --
 -- Indexes for table `school_year`
@@ -2941,7 +3022,13 @@ ALTER TABLE `sex`
 --
 ALTER TABLE `station`
   ADD PRIMARY KEY (`station_id`),
-  ADD KEY `division_id_station_fk` (`division_id_station_fk`);
+  ADD KEY `station_type_id_fk` (`station_type_id_fk`);
+
+--
+-- Indexes for table `station_types`
+--
+ALTER TABLE `station_types`
+  ADD PRIMARY KEY (`station_type_id`);
 
 --
 -- Indexes for table `step_increment`
@@ -2970,12 +3057,6 @@ ALTER TABLE `step_increment_status`
 --
 ALTER TABLE `type_of_personnel`
   ADD PRIMARY KEY (`type_of_personnel_id`);
-
---
--- Indexes for table `unit`
---
-ALTER TABLE `unit`
-  ADD PRIMARY KEY (`unit_id`);
 
 --
 -- Indexes for table `users`
@@ -3013,6 +3094,12 @@ ALTER TABLE `barangay`
   MODIFY `barangay_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `branch`
+--
+ALTER TABLE `branch`
+  MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `change_of_civil_status`
 --
 ALTER TABLE `change_of_civil_status`
@@ -3037,22 +3124,10 @@ ALTER TABLE `country`
   MODIFY `country_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `department`
---
-ALTER TABLE `department`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `division`
---
-ALTER TABLE `division`
-  MODIFY `division_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `employment_status`
 --
 ALTER TABLE `employment_status`
-  MODIFY `employment_status_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `employment_status_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -3094,13 +3169,13 @@ ALTER TABLE `mode_of_separation`
 -- AUTO_INCREMENT for table `municipality`
 --
 ALTER TABLE `municipality`
-  MODIFY `municipality_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2048;
+  MODIFY `municipality_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1643;
 
 --
 -- AUTO_INCREMENT for table `nature_of_appointment`
 --
 ALTER TABLE `nature_of_appointment`
-  MODIFY `nature_of_appointment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `nature_of_appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `office`
@@ -3118,7 +3193,7 @@ ALTER TABLE `part_of_name`
 -- AUTO_INCREMENT for table `personnel`
 --
 ALTER TABLE `personnel`
-  MODIFY `personnel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `personnel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `personnel_address`
@@ -3148,13 +3223,13 @@ ALTER TABLE `personnel_separation_records`
 -- AUTO_INCREMENT for table `position`
 --
 ALTER TABLE `position`
-  MODIFY `job_position_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `job_position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `province`
 --
 ALTER TABLE `province`
-  MODIFY `province_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `province_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `reason_for_change_correction_of_name`
@@ -3166,31 +3241,25 @@ ALTER TABLE `reason_for_change_correction_of_name`
 -- AUTO_INCREMENT for table `record_of_appointment`
 --
 ALTER TABLE `record_of_appointment`
-  MODIFY `record_of_appointment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `record_of_appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `region`
 --
 ALTER TABLE `region`
-  MODIFY `region_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `region_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `salary_grade`
 --
 ALTER TABLE `salary_grade`
-  MODIFY `salary_grade_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `salary_grade_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `salary_grade_step`
 --
 ALTER TABLE `salary_grade_step`
   MODIFY `salary_grade_step_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `school`
---
-ALTER TABLE `school`
-  MODIFY `school_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `school_year`
@@ -3226,7 +3295,13 @@ ALTER TABLE `sex`
 -- AUTO_INCREMENT for table `station`
 --
 ALTER TABLE `station`
-  MODIFY `station_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `station_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `station_types`
+--
+ALTER TABLE `station_types`
+  MODIFY `station_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `step_increment`
@@ -3250,13 +3325,7 @@ ALTER TABLE `step_increment_status`
 -- AUTO_INCREMENT for table `type_of_personnel`
 --
 ALTER TABLE `type_of_personnel`
-  MODIFY `type_of_personnel_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `unit`
---
-ALTER TABLE `unit`
-  MODIFY `unit_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `type_of_personnel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -3268,7 +3337,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `vice_type`
 --
 ALTER TABLE `vice_type`
-  MODIFY `vice_type_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `vice_type_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
@@ -3295,12 +3364,6 @@ ALTER TABLE `change_of_name`
   ADD CONSTRAINT `change_of_name_ibfk_1` FOREIGN KEY (`part_of_name_id_change_of_name_fk`) REFERENCES `part_of_name` (`part_of_name_id`),
   ADD CONSTRAINT `change_of_name_ibfk_2` FOREIGN KEY (`personnel_id_change_of_name_fk`) REFERENCES `personnel` (`personnel_id`),
   ADD CONSTRAINT `change_of_name_ibfk_3` FOREIGN KEY (`reason_for_change_correction_of_name__id_fk`) REFERENCES `reason_for_change_correction_of_name` (`reason_for_change_correction_of_name_id`);
-
---
--- Constraints for table `division`
---
-ALTER TABLE `division`
-  ADD CONSTRAINT `division_ibfk_1` FOREIGN KEY (`region_id_division_fk`) REFERENCES `region` (`region_id`);
 
 --
 -- Constraints for table `municipality`
@@ -3371,15 +3434,12 @@ ALTER TABLE `province`
 --
 ALTER TABLE `record_of_appointment`
   ADD CONSTRAINT `record_of_appointment_ibfk_1` FOREIGN KEY (`appointment_status_id_record_of_appointment_fk`) REFERENCES `appointment_status` (`appointment_status_id`),
-  ADD CONSTRAINT `record_of_appointment_ibfk_10` FOREIGN KEY (`unit_id_record_of_appointment_fk`) REFERENCES `unit` (`unit_id`),
   ADD CONSTRAINT `record_of_appointment_ibfk_11` FOREIGN KEY (`vice_type_id_record_of_appointment_fk`) REFERENCES `vice_type` (`vice_type_id`),
-  ADD CONSTRAINT `record_of_appointment_ibfk_2` FOREIGN KEY (`department_id_record_of_appointment_fk`) REFERENCES `department` (`department_id`),
-  ADD CONSTRAINT `record_of_appointment_ibfk_3` FOREIGN KEY (`division_id_record_of_appointment_fk`) REFERENCES `division` (`division_id`),
+  ADD CONSTRAINT `record_of_appointment_ibfk_12` FOREIGN KEY (`branch_id_record_of_appointment_fk`) REFERENCES `branch` (`branch_id`),
   ADD CONSTRAINT `record_of_appointment_ibfk_4` FOREIGN KEY (`employment_status_id_record_of_appointment_fk`) REFERENCES `employment_status` (`employment_status_id`),
   ADD CONSTRAINT `record_of_appointment_ibfk_5` FOREIGN KEY (`job_position_id_record_of_appointment_fk`) REFERENCES `position` (`job_position_id`),
   ADD CONSTRAINT `record_of_appointment_ibfk_6` FOREIGN KEY (`nature_of_appointment_id_record_of_appointment_fk`) REFERENCES `nature_of_appointment` (`nature_of_appointment_id`),
   ADD CONSTRAINT `record_of_appointment_ibfk_7` FOREIGN KEY (`personnel_id_record_of_appointment_fk`) REFERENCES `personnel` (`personnel_id`),
-  ADD CONSTRAINT `record_of_appointment_ibfk_8` FOREIGN KEY (`school_id_record_of_appointment_fk`) REFERENCES `school` (`school_id`),
   ADD CONSTRAINT `record_of_appointment_ibfk_9` FOREIGN KEY (`station_id_record_of_appointment_fk`) REFERENCES `station` (`station_id`);
 
 --
@@ -3395,13 +3455,6 @@ ALTER TABLE `salary_grade_step`
   ADD CONSTRAINT `salary_grade_step_ibfk_1` FOREIGN KEY (`salary_grade_id_salary_grade_step_fk`) REFERENCES `salary_grade` (`salary_grade_id`);
 
 --
--- Constraints for table `school`
---
-ALTER TABLE `school`
-  ADD CONSTRAINT `school_ibfk_1` FOREIGN KEY (`barangay_id_school_fk`) REFERENCES `barangay` (`barangay_id`),
-  ADD CONSTRAINT `school_ibfk_2` FOREIGN KEY (`division_id_school_fk`) REFERENCES `division` (`division_id`);
-
---
 -- Constraints for table `service_gap`
 --
 ALTER TABLE `service_gap`
@@ -3412,7 +3465,7 @@ ALTER TABLE `service_gap`
 -- Constraints for table `station`
 --
 ALTER TABLE `station`
-  ADD CONSTRAINT `station_ibfk_1` FOREIGN KEY (`division_id_station_fk`) REFERENCES `division` (`division_id`);
+  ADD CONSTRAINT `station_ibfk_1` FOREIGN KEY (`station_type_id_fk`) REFERENCES `station_types` (`station_type_id`);
 
 --
 -- Constraints for table `step_increment`
