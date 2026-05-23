@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Personnel;
 
 class Sex extends Model
 {
     protected $table = 'sex';
+    
 
     public function personnel()
     {

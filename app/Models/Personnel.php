@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Appointment;
 
 class Personnel extends Model
 {
     protected $table = 'personnel';
+    protected $primaryKey = 'personnel_id';
 
     protected $fillable = [
     'personnel_last_name',
@@ -59,5 +61,15 @@ class Personnel extends Model
     public function presentBarangay()
     {
         return $this->belongsTo(Barangay::class, 'present_address_barangay_id');
+    }
+    public function appointments()
+    {
+    return $this->hasMany(Appointment::class, 'personnel_id_record_of_appointment_fk');
+    }
+    public function scopeAvailableForAppointment($query)
+    {
+    return $query->whereDoesntHave('appointments', function ($q) {
+        $q->where('appointment_status_id_record_of_appointment_fk', 1); // ACTIVE
+    });
     }
 }

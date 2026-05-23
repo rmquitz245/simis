@@ -10,6 +10,7 @@
 
     <!-- YOUR CUSTOM CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
 </head>
 
 <body>
@@ -47,6 +48,7 @@
 <!-- YOUR JS -->
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/personnel.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+@stack('scripts')
 </body>
 </html>
